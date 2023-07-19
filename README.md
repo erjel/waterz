@@ -33,6 +33,14 @@ install from local version
 pip install .
 ```
 
+## With conda on Windows:
+```
+git clone git@github.com:erjel/waterz.git
+cd waterz
+conda create -n waterz python boost-cpp
+pip install .
+```
+
 # Usage
 
 ```
