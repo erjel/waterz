@@ -134,7 +134,7 @@ def agglomerate(
     import shutil
     import glob
     import numpy
-    import fcntl
+    #import fcntl
 
     try:
         import hashlib
@@ -174,7 +174,7 @@ def agglomerate(
 
     # make sure the same module is not build concurrently
     with open(os.path.join(lib_dir, module_name + '.lock'), 'w') as lock_file:
-        fcntl.lockf(lock_file, fcntl.LOCK_EX)
+        #fcntl.lockf(lock_file, fcntl.LOCK_EX)
 
         try:
 
