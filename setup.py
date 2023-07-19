@@ -4,6 +4,7 @@ from setuptools.command.build_ext import build_ext as _build_ext
 # from Cython.Build import cythonize
 import os
 import builtins
+from pathlib import Path
 
 VERSION = '0.9.5'
 
@@ -27,20 +28,24 @@ class build_ext(_build_ext):
 
 
 source_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'waterz')
+rel_home_dir =  Path((len(Path(source_dir).relative_to(Path.home()).parts) - 1) * '../')
+conda_prefix = rel_home_dir / Path(os.environ['CONDA_PREFIX']).relative_to(Path.home())
+
 include_dirs = [
     source_dir,
     os.path.join(source_dir, 'backend'),
     # os.path.dirname(get_python_inc()),
     # numpy.get_include(),
 ]
+
 extensions = [
     Extension(
         'waterz.evaluate',
         sources=['waterz/evaluate.cpp', 'waterz/frontend_evaluate.cpp'],
         include_dirs=include_dirs,
-        language='c++',
+        language='c++', 
         extra_link_args=['-std=c++11'],
-        extra_compile_args=['-std=c++11', '-w'])
+        extra_compile_args=['-std=c++11', '-w', f'-I{conda_prefix}\\Lib\\site-packages\\numpy\\core\\include', f'-I{conda_prefix}\\Library\\include',])
 ]
 
 
